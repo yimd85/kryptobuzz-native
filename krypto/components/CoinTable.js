@@ -1,43 +1,109 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
-import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import { Platform,View,Text, FlatList, StyleSheet } from "react-native";
+// import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+import {List, ListItem } from 'react-native-elements'
 import axios from 'axios';
-export default class CoinTable extends Component {
+
+
+
+export default class Home extends Component {
   constructor(props){
     super(props)
-    this.state = {cash : 100}
+    this.state = {
+      coins: ['les','lester','hello'],
+      coinData: [],
+      currentCoinPrice: []
+    }
   }
   componentDidMount(){
-    console.log('Making Api Call');
-    axios.get('https://bittrex.com/api/v1.1/public/getcurrencies?market=btc-xrp')
-      .then(function (response) {
-        console.log(response.result);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    var self = this;
+    axios.get('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,XRP&tsyms=USD')
+    .then(function (response) {
+    var displayData = response.data.DISPLAY
+    console.log('this is the data you need', Object.keys(displayData));
+    self.setState({
+      coinData : displayData.XRP.USD
+    })
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+
   }
 
-
   render() {
-    const tableHead = ['Coin', 'Holding', 'Price', 'Alert'];
-    const tableData = [
-      ['1', '2', '3', '4'],
-      ['a', 'b', 'c', 'd'],
-    ];
+setTimeout(() => {
+    var self = this;
+    axios.get('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,XRP&tsyms=USD')
+    .then(function (response) {
+    var displayData = response.data.DISPLAY
+    console.log('this is the data you need', Object.keys(displayData));
+    self.setState({
+      coinData : displayData.XRP.USD
+    })
+
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+
+
+
+}, 500000)
+
+
+
+    const dataresponse = this.state.coinData;
+    console.log("This is pure response", {dataresponse});
+    const list = [
+      {
+        title: 'Bitcoin',
+        icon: 'av-timer'
+      },
+      {
+        title: 'Trips',
+        icon: 'flight-takeoff'
+      }
+    ]
+    console.log('render funlistction response ',list);
+    var objectResponse = [dataresponse]
+    console.log('render keys for response ',objectResponse);
+    var displayDataKeys = Object.keys(dataresponse).map((key) =>{
+      // console.log('these are your '+ [key] + dataresponse[key]);
+
+
+    });
+
+
+  // setTimeout(() => {
+
+
+
+
     return (
-      <View>
-        <Table>
-          <Row data={tableHead} style={styles.head} textStyle={styles.text}/>
-          <Rows data={tableData} style={styles.row} textStyle={styles.text}/>
-        </Table>
-      </View>
+
+      <List>
+      {
+        objectResponse.map((item, i) => (
+          <ListItem
+          key={i}
+          title={item.PRICE}
+          subtitle={item.CHANGEPCTDAY}
+
+      />
+    ))
+  }
+</List>
+
     )
   }
 }
 
 const styles = StyleSheet.create({
-  head: { height: 30, backgroundColor: '#000' },
-  text: { marginLeft: 5, color: 'white' },
-  row: { height: 30 }
+  head: { height: 40, backgroundColor: '#f1f8ff' },
+title: { flex: 1, backgroundColor: '#f6f8fa' },
+row: { height: 28 },
+text: { textAlign: 'center' }
 })
