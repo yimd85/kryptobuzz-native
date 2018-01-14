@@ -49,12 +49,9 @@ class Main extends React.Component {
         }
       })
       .then(function(response) {
-        // console.log("this is your news ", response.data);
-        // response.data.map(function(key, value) {
         self.setState({
           coinNewsData: response.data.articles
         });
-        // });
       })
       .catch(function(error) {
         console.log(error);
@@ -63,7 +60,7 @@ class Main extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const coinNewsResponse = this.state.coinNewsData;
-    console.log(coinNewsResponse, "this is what your news state looks like");
+    // console.log(coinNewsResponse, "this is what your news state looks like");
     return (
       <Container style={{ backgroundColor: "#e9e9ef" }}>
         <Content>
@@ -96,8 +93,7 @@ class Main extends React.Component {
                             published_at: l.publishedAt,
                             articleURL: l.url
                           })
-                        }
-                      >
+                        }>
                         <Text style={{ color: "#4183f4" }}>Read More</Text>
                       </Button>
                     </Right>
