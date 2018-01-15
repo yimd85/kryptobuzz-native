@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { StackNavigator } from "react-navigation";
-import { View, Stylesheet } from "react-native";
+import { View } from "react-native";
 import api from "../config/api.js";
 import axios from "axios";
 import Echarts from "react-native-charting";
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from "react-native-table-component";
 
 import { Container, Header, Content, Footer, FooterTab, Button, Text } from "native-base";
 export default class CoinChart extends Component {
@@ -13,7 +14,8 @@ export default class CoinChart extends Component {
       CurrentCoinInfo: [],
       coinData: "",
       coinDataDays: [],
-      options: []
+      options: [],
+      coinTodayInfo: []
     };
   }
   static navigationOptions = ({ navigation }) => ({
@@ -48,7 +50,12 @@ export default class CoinChart extends Component {
         var time = month + " " + date + "," + year;
         return time;
       });
-      console.log();
+      axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${params.coinSymbol}&tsyms=USD`).then(res => {
+        var coinTodayInfo = res.data.DISPLAY[params.coinSymbol].USD;
+        this.setState({
+          coinTodayInfo: res.data.DISPLAY[params.coinSymbol].USD
+        });
+      });
       this.setState({
         options: {
           title: {
@@ -95,20 +102,21 @@ export default class CoinChart extends Component {
           dataZoom: [
             {
               type: "inside",
+              show: false,
               start: 60
             },
             {
               left: "10%",
-              right: "5%",
+              right: "10%",
               start: 0,
-              end: thishour,
+              // end: thishour,
               handleIcon:
                 "M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z",
-              handleSize: "80%",
+              handleSize: "100%",
               handleStyle: {
-                color: "#fff",
+                color: "#d27270",
                 shadowBlur: 3,
-                shadowColor: "rgba(51,102,255, 0.6)",
+                shadowColor: "white",
                 shadowOffsetX: 2,
                 shadowOffsetY: 2
               }
@@ -151,11 +159,18 @@ export default class CoinChart extends Component {
     const { params } = this.props.navigation.state;
     var coinDataState = this.state.CurrentCoinInfo;
     var coinDataDays = this.state.coinDataDays;
+    const todayPercent = this.state.coinTodayInfo["CHANGEPCT24HOUR"];
+    const tableHead = ["Price", "High", "Low", "% Change"];
+    const tableData = [[this.state.coinTodayInfo["PRICE"], this.state.coinTodayInfo["HIGH24HOUR"], this.state.coinTodayInfo["LOW24HOUR"], todayPercent]];
+
     return (
-      <Container>
-        <Content>
-          <Echarts style={{ backgroundColor: "#000000" }} width="100%" option={this.state.options} height={300} onPress={params => console.log(params)} />
-        </Content>
+      <Container style={{ backgroundColor: "white" }}>
+        <Echarts style={{ backgroundColor: "#000000" }} width="100%" option={this.state.options} height={350} onPress={params => console.log(params)} />
+        <Text style={{ fontSize: 14, paddingLeft: 10, marginBottom: 10, marginTop: 10 }}>24 Hour Market Data</Text>
+        <Table style={{}} borderStyle={{ borderWidth: 0 }}>
+          <Row data={tableHead} borderStyle={{ borderWidth: 0 }} style={{ paddingLeft: 10, height: 20, backgroundColor: "#d27270" }} textStyle={{ color: "white", textAlign: "left" }} />
+          <Rows data={tableData} borderStyle={{ borderWidth: 0 }} style={{ paddingLeft: 10, height: 20 }} textStyle={{ color: "black", textAlign: "left" }} />
+        </Table>
       </Container>
     );
   }

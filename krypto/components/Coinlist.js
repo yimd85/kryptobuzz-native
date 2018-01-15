@@ -28,6 +28,17 @@ export default class CoinList extends Component {
     const coinData = this.state.coinData;
     // console.log("this is api response", this.state.coinApi);
     const { navigate } = this.props.navigation;
+    function addCommas(nStr) {
+      nStr += "";
+      var x = nStr.split(".");
+      var x1 = x[0];
+      var x2 = x.length > 1 ? "." + x[1] : "";
+      var rgx = /(\d+)(\d{3})/;
+      while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, "$1" + "," + "$2");
+      }
+      return x1 + x2;
+    }
     return (
       <Container>
         <Content>
@@ -51,16 +62,30 @@ export default class CoinList extends Component {
               <Left />
               <Body>
                 <Text>{l.name}</Text>
-                <Text note>{"$" + l.price_usd}</Text>
-              </Body>
-              <Right>
                 <Text
-                  note
                   style={{
                     color: l.percent_change_24h.includes("-") ? "red" : "green"
-                  }}>
-                  {l.percent_change_24h.includes("-") ? `${l.percent_change_24h}%` : `+${l.percent_change_24h}%`}
+                  }}
+                  note>
+                  {"$" + addCommas(l.price_usd)}
                 </Text>
+              </Body>
+              <Right>
+                <View
+                  style={{
+                    borderRadius: 4,
+                    borderWidth: 0.5,
+                    padding: 8,
+                    borderColor: l.percent_change_24h.includes("-") ? "red" : "green"
+                  }}>
+                  <Text
+                    note
+                    style={{
+                      color: l.percent_change_24h.includes("-") ? "red" : "green"
+                    }}>
+                    {l.percent_change_24h.includes("-") ? `${l.percent_change_24h}%` : `+${l.percent_change_24h}%`}
+                  </Text>
+                </View>
               </Right>
             </ListItem>
           ))}
