@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = {
   getCoinData() {
-    let url = "https://api.coinmarketcap.com/v1/ticker/?limit=2";
+    let url = "https://api.coinmarketcap.com/v1/ticker/?limit=5";
     return axios.get(url).then(res => res.data);
   },
   getlast7() {
