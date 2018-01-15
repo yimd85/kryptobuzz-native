@@ -4,7 +4,7 @@ import { View } from "react-native";
 import api from "../config/api.js";
 import axios from "axios";
 import Echarts from "react-native-charting";
-import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from "native-base";
+import { Container, Header, Content, List, ListItem, Item, Icon, Input, Button, Left, Body, Right, Thumbnail, Text } from "native-base";
 export default class CoinList extends Component {
   static navigationOptions = {
     title: "Coins"
@@ -15,6 +15,7 @@ export default class CoinList extends Component {
       coinData: []
     };
   }
+
   componentWillMount() {
     api.getCoinData().then(res => {
       this.setState({

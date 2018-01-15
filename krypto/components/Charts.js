@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StackNavigator } from "react-navigation";
-import { View } from "react-native";
+import { View, Stylesheet } from "react-native";
 import api from "../config/api.js";
 import axios from "axios";
 import Echarts from "react-native-charting";
@@ -28,45 +28,78 @@ export default class CoinChart extends Component {
     let yesterdaytimestamp = todaytimestamp - 86400;
     var d = new Date();
     var thishour = d.getHours();
-    let url = `https://min-api.cryptocompare.com/data/histohour?fsym=${params.coinSymbol}&tsym=USD&limit=${thishour}&aggregate=1&e=CCCAGG`;
+    let url = `https://min-api.cryptocompare.com/data/histoday?fsym=${params.coinSymbol}&tsym=USD&limit=365&aggregate=1&e=CCCAGG`;
+
     axios.get(url).then(res => {
       var response = res.data.Data;
       var percentChange24 = Math.floor(params.percentChange_24h);
       var currentprice = Math.floor(params.coinPrice);
       var sevendaydata = response.map((l, i) => l.close);
-      var hours = response.map((l, i) => i);
+      var hours = response.map((l, i) => {
+        var timestamp = l.time;
+        var a = new Date(timestamp * 1000);
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = month + " " + date + "," + year;
+        return time;
+      });
+      console.log();
       this.setState({
         options: {
           title: {
-            text: `${params.coinName}`
+            text: `${params.coinName}`,
+            textStyle: {
+              color: "#000000"
+            }
           },
           tooltip: {
             trigger: "axis"
           },
+          grid: {
+            left: "0%",
+            right: "0%",
+            top: "0%",
+            backgroundColor: "#ffffff",
+            show: "true"
+          },
           legend: {
-            data: ["USD"]
+            data: ["USD"],
+            x: "left"
           },
           xAxis: {
+            show: false,
             type: "category",
             nameLocation: "middle",
-
             data: hours,
             boundaryGap: false
           },
+
           yAxis: {
             type: "value",
+            show: false,
+
             position: "left",
-            boundaryGap: [0, "10%"],
+            axisLabel: {
+              inside: true
+            },
             scale: true
             // min: lowestPrice
           },
           toolbox: {},
+
           dataZoom: [
             {
               type: "inside",
-              start: 0
+              start: 60
             },
             {
+              left: "10%",
+              right: "5%",
               start: 0,
               end: thishour,
               handleIcon:
@@ -75,7 +108,7 @@ export default class CoinChart extends Component {
               handleStyle: {
                 color: "#fff",
                 shadowBlur: 3,
-                shadowColor: "rgba(0, 0, 0, 0.6)",
+                shadowColor: "rgba(51,102,255, 0.6)",
                 shadowOffsetX: 2,
                 shadowOffsetY: 2
               }
@@ -88,15 +121,18 @@ export default class CoinChart extends Component {
               smooth: true,
               symbol: "none",
               sampling: "average",
-              itemStyle: {
+
+              lineStyle: {
                 normal: {
-                  color: "#c23531"
+                  color: "black",
+                  width: 1,
+                  shadowColor: "white",
+                  shadowOffsetY: 2
                 }
               },
+              stack: "confidence-band",
               areaStyle: {
-                normal: {
-                  color: ["#c23531"]
-                }
+                normal: {}
               },
               data: sevendaydata
             }
@@ -118,7 +154,7 @@ export default class CoinChart extends Component {
     return (
       <Container>
         <Content>
-          <Echarts option={this.state.options} height={300} onPress={params => console.log(params)} />
+          <Echarts style={{ backgroundColor: "#000000" }} width="100%" option={this.state.options} height={300} onPress={params => console.log(params)} />
         </Content>
       </Container>
     );

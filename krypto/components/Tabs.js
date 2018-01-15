@@ -11,40 +11,22 @@ const RootTabs = TabNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: "Feed",
-      tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons
-          name={focused ? "ios-home" : "ios-home-outline"}
-          size={26}
-          style={{ color: tintColor }}
-        />
-      )
+      tabBarLabel: "News",
+      tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-home" : "ios-home-outline"} size={26} style={{ color: tintColor }} />
     }
   },
   Stats: {
     screen: StatScreen,
     navigationOptions: {
       tabBarLabel: "Stats",
-      tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons
-          name={focused ? "ios-stats" : "ios-stats-outline"}
-          size={26}
-          style={{ color: tintColor }}
-        />
-      )
+      tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-stats" : "ios-stats-outline"} size={26} style={{ color: tintColor }} />
     }
   },
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
       tabBarLabel: "Profile",
-      tabBarIcon: ({ tintColor, focused }) => (
-        <Ionicons
-          name={focused ? "ios-settings" : "ios-settings-outline"}
-          size={26}
-          style={{ color: tintColor }}
-        />
-      )
+      tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-settings" : "ios-settings-outline"} size={26} style={{ color: tintColor }} />
     }
   }
 });
