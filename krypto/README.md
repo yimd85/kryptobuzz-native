@@ -1,5 +1,3 @@
-<img src="https://www.thewrap.com/wp-content/uploads/2014/08/nathan-for-you-daddys-watching.jpg.jpg" width="150" height="150" align="right">
-
 # Krypto Buzz
 
  <br>
