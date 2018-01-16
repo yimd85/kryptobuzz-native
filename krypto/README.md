@@ -37,7 +37,7 @@ Homepage will show recent crypto currency news. Stats page list the top coins ba
 │       └── api.js     ### Handles api calls
 │   └── screens        ### Any shared components
 │       └── Home.js     ### Renders recent crypto news
-│       └── Profile.js      ### Navigates to profile
+│       └── Marketcap.js      ### Shows top coins with market cap in pie chart
 │       └── Stats.js      ### Handle stack navigator for Chart and Coinlist
 │
 └──

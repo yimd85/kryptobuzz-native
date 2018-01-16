@@ -11,14 +11,13 @@ var width = Dimensions.get("window").width;
 const apiKey = "cae50b5832d94f5da2229ba011ff49ab";
 class Main extends React.Component {
   static navigationOptions = {
-    title: "News Feed",
-    headerStyle: { backgroundColor: "white" },
-    headerTitleStyle: { color: "black" }
+    title: "News Feed"
   };
   constructor(props) {
     super(props);
     this.state = { coinNewsData: [] };
   }
+  componentWillMount() {}
   componentDidMount() {
     var self = this;
     axios
@@ -89,9 +88,7 @@ class Main extends React.Component {
 }
 class Article extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: `Article`,
-    headerStyle: { backgroundColor: "#FFF" },
-    headerTitleStyle: { color: "black" }
+    title: `Article`
   });
   render() {
     const { params } = this.props.navigation.state;

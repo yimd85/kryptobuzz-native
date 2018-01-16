@@ -2,17 +2,17 @@ import React from "react";
 import { View, Text } from "react-native";
 import { TabNavigator, StackNavigator } from "react-navigation"; // 1.0.0-beta.14
 import Ionicons from "react-native-vector-icons/Ionicons"; // 4.4.2
-import HomeScreen from "../screens/Home.js";
-import ProfileScreen from "../screens/Profile.js";
+import NewsFeed from "../screens/Home.js";
+import Marketcap from "../screens/Marketcap.js";
 import StatScreen from "../screens/Stats.js";
 
 const RootTabs = TabNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: NewsFeed,
     navigationOptions: {
       tabBarLabel: "News",
       headerTitleStyle: { color: "green" },
-      tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-home" : "ios-home-outline"} size={26} style={{ color: tintColor }} />
+      tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-list-box" : "ios-list-box-outline"} size={26} style={{ color: tintColor }} />
     }
   },
   Stats: {
@@ -22,11 +22,11 @@ const RootTabs = TabNavigator({
       tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-stats" : "ios-stats-outline"} size={26} style={{ color: tintColor }} />
     }
   },
-  Profile: {
-    screen: ProfileScreen,
+  Market: {
+    screen: Marketcap,
     navigationOptions: {
-      tabBarLabel: "Profile",
-      tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-settings" : "ios-settings-outline"} size={26} style={{ color: tintColor }} />
+      tabBarLabel: "Market",
+      tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-easel" : "ios-easel-outline"} size={26} style={{ color: tintColor }} />
     }
   }
 });
