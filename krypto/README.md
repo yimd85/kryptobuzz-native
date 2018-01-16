@@ -2,7 +2,7 @@
 
  <br>
 
-### One Stop Crypto Hub
+### Crypto Currency Hub
 
 Crypto currency app that allows you to read recent Crypto news and historical data for specific coins, Created by [Lester Loor](https://github.com/lesterloor)
 
