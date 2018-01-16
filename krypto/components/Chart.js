@@ -41,9 +41,7 @@ export default class CoinChart extends Component {
       var sevendaydataLow = response.map((l, i) => l.low);
       var sevendaydataOpen = response.map((l, i) => l.open);
       var sevendaydataHigh = response.map((l, i) => l.high);
-      console.log(sevendaydataOpen);
-      console.log(sevendaydataOpen);
-      console.log(sevendaydataOpen);
+
       var hours = response.map((l, i) => {
         var timestamp = l.time;
         var a = new Date(timestamp * 1000);
@@ -55,7 +53,6 @@ export default class CoinChart extends Component {
         var time = month + " " + date + "," + year;
         return time;
       });
-      console.log(hours);
       axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${params.coinSymbol}&tsyms=USD`).then(res => {
         var coinTodayInfo = res.data.DISPLAY[params.coinSymbol].USD;
         this.setState({
@@ -149,7 +146,7 @@ export default class CoinChart extends Component {
               stack: "confidence-band",
               areaStyle: {
                 normal: {
-                  color: params.percentChange_1h.includes("-") ? "red" : "green"
+                  color: params.percentChange_24h.includes("-") ? "red" : "green"
                 }
               },
               data: sevendaydata

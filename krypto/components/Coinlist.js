@@ -54,8 +54,8 @@ export default class CoinList extends Component {
                   coindData: l,
                   coinName: l.name,
                   coinPrice: l.price_usd,
-                  percentChange_1h: l.percent_change_1h,
-                  // percentChange_24h: l.percent_change_1h,
+                  percentChange_1h: l.percent_change_24h,
+                  percentChange_24h: l.percent_change_24h,
                   percentChange_7d: l.percent_change_7d,
                   coinMarketCap: l.market_cap_usd,
                   coinSymbol: l.symbol
@@ -66,7 +66,7 @@ export default class CoinList extends Component {
                 <Text>{l.name}</Text>
                 <Text
                   style={{
-                    color: l.percent_change_1h.includes("-") ? "red" : "green"
+                    color: l.percent_change_24h.includes("-") ? "red" : "green"
                   }}
                   note>
                   {"$" + addCommas(l.price_usd)}
@@ -78,14 +78,14 @@ export default class CoinList extends Component {
                     borderRadius: 4,
                     borderWidth: 0.5,
                     padding: 8,
-                    borderColor: l.percent_change_1h.includes("-") ? "red" : "green"
+                    borderColor: l.percent_change_24h.includes("-") ? "red" : "green"
                   }}>
                   <Text
                     note
                     style={{
-                      color: l.percent_change_1h.includes("-") ? "red" : "green"
+                      color: l.percent_change_24h.includes("-") ? "red" : "green"
                     }}>
-                    {l.percent_change_1h.includes("-") ? `${l.percent_change_1h}%` : `+${l.percent_change_1h}%`}
+                    {l.percent_change_24h.includes("-") ? `${l.percent_change_24h}%` : `+${l.percent_change_24h}%`}
                   </Text>
                 </View>
               </Right>

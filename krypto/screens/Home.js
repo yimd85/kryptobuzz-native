@@ -43,7 +43,7 @@ class Main extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const coinNewsResponse = this.state.coinNewsData;
-    console.log(coinNewsResponse, "this is what your news state looks like");
+    // console.log(coinNewsResponse, "this is what your news state looks like");
     return (
       <Container style={{ backgroundColor: "#e9e9ef" }}>
         <Content>
@@ -91,7 +91,7 @@ class Article extends React.Component {
   static navigationOptions = ({ navigation }) => ({
     title: `Article`,
     headerStyle: { backgroundColor: "#FFF" },
-    headerTitleStyle: { color: "green" }
+    headerTitleStyle: { color: "black" }
   });
   render() {
     const { params } = this.props.navigation.state;
