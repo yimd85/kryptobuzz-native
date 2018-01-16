@@ -5,7 +5,6 @@ import Ionicons from "react-native-vector-icons/Ionicons"; // 4.4.2
 import HomeScreen from "../screens/Home.js";
 import ProfileScreen from "../screens/Profile.js";
 import StatScreen from "../screens/Stats.js";
-import Coindetails from "../screens/Coindetails.js";
 
 const RootTabs = TabNavigator({
   Home: {

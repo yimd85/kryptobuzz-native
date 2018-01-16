@@ -3,7 +3,6 @@ import { StyleSheet, View, Button } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from "native-base";
 import Profilesettings from "../screens/Profilesettings.js";
-import Holdings from "../screens/Holdings.js";
 import Ionicons from "react-native-vector-icons/Ionicons"; // 4.4.2
 
 class Profile extends React.Component {
@@ -27,7 +26,7 @@ class Profile extends React.Component {
             heading={
               <TabHeading>
                 <Icon name="ios-settings" />
-                <Text>Holdings</Text>
+                <Text />
               </TabHeading>
             }>
             <Profilesettings />
@@ -38,9 +37,8 @@ class Profile extends React.Component {
                 <Icon name="ios-settings" />
                 <Text>Settings</Text>
               </TabHeading>
-            }>
-            <Holdings />
-          </Tab>
+            }
+          />
         </Tabs>
       </Container>
     );

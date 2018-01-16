@@ -18,7 +18,7 @@ Then, scan the QR code below:
 
 <img src="./images/code.png" align= "center" width="100" height="100" />
 
-or go to our [project](https://expo.io/@nethanelkohen/Daddys-Watching) on Expo.
+or go to our [project](exp://57-byi.lesterloor.krypto.exp.direct:80) on Expo.
 
 Homepage will show recent crypto currency news. Stats page list the top coins based on market cap, Clicking the coins will render a chart with that coins last 100 days statistics.
 
