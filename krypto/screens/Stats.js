@@ -2,7 +2,7 @@ import React from "react";
 import { AppRegistry, StyleSheet, View, Button } from "react-native";
 import { StackNavigator } from "react-navigation";
 import api from "../config/api.js";
-import CoinChart from "../components/Charts.js";
+import CoinChart from "../components/chart2.js";
 import CoinList from "../components/Coinlist.js";
 
 export const SimpleApp = StackNavigator({

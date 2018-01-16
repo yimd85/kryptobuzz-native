@@ -12,6 +12,7 @@ const RootTabs = TabNavigator({
     screen: HomeScreen,
     navigationOptions: {
       tabBarLabel: "News",
+      headerTitleStyle: { color: "green" },
       tabBarIcon: ({ tintColor, focused }) => <Ionicons name={focused ? "ios-home" : "ios-home-outline"} size={26} style={{ color: tintColor }} />
     }
   },

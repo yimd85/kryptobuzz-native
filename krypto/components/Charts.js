@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StackNavigator } from "react-navigation";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import api from "../config/api.js";
 import axios from "axios";
 import Echarts from "react-native-charting";
@@ -11,6 +11,7 @@ export default class CoinChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      chartLoaded: false,
       CurrentCoinInfo: [],
       coinData: "",
       coinDataDays: [],
@@ -21,7 +22,7 @@ export default class CoinChart extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `Coin Chart`
   });
-  componentWillMount() {
+  componentDidMount() {
     const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
     let start = new Date();
@@ -44,8 +45,6 @@ export default class CoinChart extends Component {
         var year = a.getFullYear();
         var month = months[a.getMonth()];
         var date = a.getDate();
-        var hour = a.getHours();
-        var min = a.getMinutes();
         var sec = a.getSeconds();
         var time = month + " " + date + "," + year;
         return time;
@@ -53,7 +52,8 @@ export default class CoinChart extends Component {
       axios.get(`https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${params.coinSymbol}&tsyms=USD`).then(res => {
         var coinTodayInfo = res.data.DISPLAY[params.coinSymbol].USD;
         this.setState({
-          coinTodayInfo: res.data.DISPLAY[params.coinSymbol].USD
+          coinTodayInfo: res.data.DISPLAY[params.coinSymbol].USD,
+          chartLoaded: true
         });
       });
       this.setState({
@@ -109,6 +109,7 @@ export default class CoinChart extends Component {
               left: "10%",
               right: "10%",
               start: 0,
+              end: 40,
               // end: thishour,
               handleIcon:
                 "M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z",
@@ -140,7 +141,9 @@ export default class CoinChart extends Component {
               },
               stack: "confidence-band",
               areaStyle: {
-                normal: {}
+                normal: {
+                  color: params.percentChange_24h.includes("-") ? "red" : "green"
+                }
               },
               data: sevendaydata
             }
@@ -160,17 +163,35 @@ export default class CoinChart extends Component {
     var coinDataState = this.state.CurrentCoinInfo;
     var coinDataDays = this.state.coinDataDays;
     const todayPercent = this.state.coinTodayInfo["CHANGEPCT24HOUR"];
-    const tableHead = ["Price", "High", "Low", "% Change"];
-    const tableData = [[this.state.coinTodayInfo["PRICE"], this.state.coinTodayInfo["HIGH24HOUR"], this.state.coinTodayInfo["LOW24HOUR"], todayPercent]];
+    const tableHead = ["Price", "High", "Low"];
+    const tableData = [[this.state.coinTodayInfo["PRICE"], this.state.coinTodayInfo["HIGH24HOUR"], this.state.coinTodayInfo["LOW24HOUR"]]];
 
     return (
       <Container style={{ backgroundColor: "white" }}>
-        <Echarts style={{ backgroundColor: "#000000" }} width="100%" option={this.state.options} height={350} onPress={params => console.log(params)} />
-        <Text style={{ fontSize: 14, paddingLeft: 10, marginBottom: 10, marginTop: 10 }}>24 Hour Market Data</Text>
-        <Table style={{}} borderStyle={{ borderWidth: 0 }}>
-          <Row data={tableHead} borderStyle={{ borderWidth: 0 }} style={{ paddingLeft: 10, height: 20, backgroundColor: "#d27270" }} textStyle={{ color: "white", textAlign: "left" }} />
-          <Rows data={tableData} borderStyle={{ borderWidth: 0 }} style={{ paddingLeft: 10, height: 20 }} textStyle={{ color: "black", textAlign: "left" }} />
-        </Table>
+        {this.state.chartLoaded ? (
+          <Container style={{ backgroundColor: "white" }}>
+            <Echarts style={{ backgroundColor: "#000000" }} width="100%" option={this.state.options} height={350} onPress={params => console.log(params)} />
+            <Text style={{ fontSize: 14, paddingLeft: 10, marginBottom: 10, marginTop: 10 }}>24 Hour Market Data</Text>
+            <Table style={{}} borderStyle={{ borderWidth: 0 }}>
+              <Row
+                data={tableHead}
+                borderStyle={{ borderWidth: 0 }}
+                style={{ paddingLeft: 10, height: 20, alignItems: "center", justifyContent: "center", backgroundColor: "white" }}
+                textStyle={{ color: "black", textAlign: "center" }}
+              />
+              <Rows
+                data={tableData}
+                borderStyle={{ borderWidth: 0 }}
+                style={{ paddingLeft: 10, height: 20, alignItems: "center", justifyContent: "center" }}
+                textStyle={{ color: "black", textAlign: "center" }}
+              />
+            </Table>
+          </Container>
+        ) : (
+          <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+            <Text>"Loading..."</Text>
+          </View>
+        )}
       </Container>
     );
   }

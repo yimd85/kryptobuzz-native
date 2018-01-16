@@ -7,7 +7,9 @@ import Echarts from "react-native-charting";
 import { Container, Header, Content, List, ListItem, Item, Icon, Input, Button, Left, Body, Right, Thumbnail, Text } from "native-base";
 export default class CoinList extends Component {
   static navigationOptions = {
-    title: "Coins"
+    title: "Coins",
+    headerStyle: { backgroundColor: "white" },
+    headerTitleStyle: { color: "black" }
   };
   constructor(props) {
     super(props);
@@ -26,7 +28,7 @@ export default class CoinList extends Component {
 
   render() {
     const coinData = this.state.coinData;
-    // console.log("this is api response", this.state.coinApi);
+    // console.log("this is api respons?e", this.state.coinApi);
     const { navigate } = this.props.navigation;
     function addCommas(nStr) {
       nStr += "";
@@ -53,7 +55,7 @@ export default class CoinList extends Component {
                   coinName: l.name,
                   coinPrice: l.price_usd,
                   percentChange_1h: l.percent_change_1h,
-                  percentChange_24h: l.percent_change_24h,
+                  // percentChange_24h: l.percent_change_1h,
                   percentChange_7d: l.percent_change_7d,
                   coinMarketCap: l.market_cap_usd,
                   coinSymbol: l.symbol
@@ -64,7 +66,7 @@ export default class CoinList extends Component {
                 <Text>{l.name}</Text>
                 <Text
                   style={{
-                    color: l.percent_change_24h.includes("-") ? "red" : "green"
+                    color: l.percent_change_1h.includes("-") ? "red" : "green"
                   }}
                   note>
                   {"$" + addCommas(l.price_usd)}
@@ -76,14 +78,14 @@ export default class CoinList extends Component {
                     borderRadius: 4,
                     borderWidth: 0.5,
                     padding: 8,
-                    borderColor: l.percent_change_24h.includes("-") ? "red" : "green"
+                    borderColor: l.percent_change_1h.includes("-") ? "red" : "green"
                   }}>
                   <Text
                     note
                     style={{
-                      color: l.percent_change_24h.includes("-") ? "red" : "green"
+                      color: l.percent_change_1h.includes("-") ? "red" : "green"
                     }}>
-                    {l.percent_change_24h.includes("-") ? `${l.percent_change_24h}%` : `+${l.percent_change_24h}%`}
+                    {l.percent_change_1h.includes("-") ? `${l.percent_change_1h}%` : `+${l.percent_change_1h}%`}
                   </Text>
                 </View>
               </Right>

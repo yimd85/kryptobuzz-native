@@ -1,28 +1,9 @@
 import React, { Component } from "react";
-import {
-  Dimensions,
-  Image,
-  WebView,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
+import { Dimensions, Image, WebView, StyleSheet, Text, View } from "react-native";
 import { StackNavigator } from "react-navigation";
 import axios from "axios";
 import { Divider, List, ListItem } from "react-native-elements";
-import {
-  Container,
-  Header,
-  Content,
-  Card,
-  CardItem,
-  Thumbnail,
-  Icon,
-  Button,
-  Left,
-  Body,
-  Right
-} from "native-base";
+import { Container, Header, Content, Card, CardItem, Thumbnail, Icon, Button, Left, Body, Right } from "native-base";
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 var width = Dimensions.get("window").width;
@@ -30,7 +11,9 @@ var width = Dimensions.get("window").width;
 const apiKey = "cae50b5832d94f5da2229ba011ff49ab";
 class Main extends React.Component {
   static navigationOptions = {
-    title: "News Feed"
+    title: "News Feed",
+    headerStyle: { backgroundColor: "white" },
+    headerTitleStyle: { color: "black" }
   };
   constructor(props) {
     super(props);
@@ -60,7 +43,7 @@ class Main extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     const coinNewsResponse = this.state.coinNewsData;
-    // console.log(coinNewsResponse, "this is what your news state looks like");
+    console.log(coinNewsResponse, "this is what your news state looks like");
     return (
       <Container style={{ backgroundColor: "#e9e9ef" }}>
         <Content>
@@ -69,10 +52,7 @@ class Main extends React.Component {
               <View style={styles.box}>
                 <Card>
                   <CardItem cardBody>
-                    <Image
-                      source={{ uri: l.urlToImage }}
-                      style={{ height: 150, width: null, flex: 1 }}
-                    />
+                    <Image source={{ uri: l.urlToImage }} style={{ height: 150, width: null, flex: 1 }} />
                   </CardItem>
                   <Text style={styles.articleTitle}>{l.title}</Text>
                   <CardItem />
@@ -109,17 +89,14 @@ class Main extends React.Component {
 }
 class Article extends React.Component {
   static navigationOptions = ({ navigation }) => ({
-    title: `Article`
+    title: `Article`,
+    headerStyle: { backgroundColor: "#FFF" },
+    headerTitleStyle: { color: "green" }
   });
   render() {
     const { params } = this.props.navigation.state;
     const { navigate } = this.props.navigation;
-    return (
-      <WebView
-        source={{ uri: `${params.articleURL}` }}
-        style={{ marginTop: 0 }}
-      />
-    );
+    return <WebView source={{ uri: `${params.articleURL}` }} style={{ marginTop: 0 }} />;
   }
 }
 
