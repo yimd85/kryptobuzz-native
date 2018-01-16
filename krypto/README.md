@@ -45,7 +45,7 @@ Homepage will show recent crypto currency news. Stats page list the top coins ba
 
 ## What's Inside
 
-Application was built using React-Native, Expo, Crypto compare api, and news.org api
+Application was built using React-Native, Expo, Crypto compare api, and News.org api
 
 ## Contribute
 
@@ -53,7 +53,7 @@ Add to our project! Please read the [contribution guidelines](CONTRIBUTING.md) f
 
 # Inspiration
 
-* [Coinstats](https://itunes.apple.com/us/app/coin-stats-crypto-portfolio/id1247849330?mt=8) - Name/concept
+* [Coinstats](https://itunes.apple.com/us/app/coin-stats-crypto-portfolio/id1247849330?mt=8) - Concept
 
 ## License
 
